@@ -1,0 +1,67 @@
+PC1
+192.168.10.1	
+255.255.255.0
+192.168.10.254
+
+PC2
+172.16.100.1	
+255.255.255.128
+172.16.100.126
+
+========================================================
+
+SW1
+SW2
+
+========================================================
+
+R1
+en
+conf t
+no ip domain lookup
+hostname R1
+int g0/0
+ip add 192.168.10.254 255.255.255.0
+no shut
+
+int s0/0/0
+ip add 10.10.10.5 255.255.255.252
+no shut
+
+R2
+en
+conf t
+no ip domain lookup
+hostname R2
+int s0/0/0
+ip add 10.10.10.6 255.255.255.252
+clock rate 64000
+=> clock rate values have no direct effect on OSPF. OSPF calculates its metric from the interface bandwidth value, not from clock rate.
+
+no shut
+
+int s0/0/1
+ip add 11.11.11.9 255.255.255.252
+clock rate 64000
+no shut
+
+
+R3
+en
+conf t
+no ip domain lookup
+hostname R3
+int s/0/0
+ip add 11.11.11.10 255.255.255.252
+no shut
+
+int g0/0
+ip add 172.16.100.126 255.255.255.128
+no shut
+
+
+
+
+
+
+
